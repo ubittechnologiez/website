@@ -1494,10 +1494,10 @@ textarea.form-control { resize: vertical; min-height: 100px; }
 .sidebar-overlay {
   position: fixed;
   top: 0; left: 0; right: 0; bottom: 0;
-  background: rgba(0,0,0,0.5);
+  background: rgba(13, 31, 60, 0.25); /* Lighter brand-aware dim */
   z-index: 95;
   display: none;
-  backdrop-filter: blur(4px);
+  /* Blur removed as per user request to avoid visual confusion */
 }
 
 .sidebar-overlay.active { display: block; }
@@ -1520,20 +1520,76 @@ textarea.form-control { resize: vertical; min-height: 100px; }
   .sidebar {
     transform: translateX(-100%);
     box-shadow: 10px 0 30px rgba(0,0,0,0.2);
+    width: 280px;
+    z-index: 1000;
   }
   
-  /* Reset desktop collapse on mobile */
-  .sidebar.collapsed { width: 270px; transform: translateX(-100%); }
-  .sidebar.collapsed.mobile-active { transform: translateX(0); }
+  .sidebar.mobile-active { transform: translateX(0) !important; }
+
+  .main-content { 
+    margin-left: 0 !important; 
+    width: 100% !important; 
+    transition: filter 0.3s ease;
+  }
   
-  .main-content { margin-left: 0 !important; width: 100% !important; }
+  /* Remove blur on main content when sidebar is active if any */
+  .main-content.sidebar-active { filter: none !important; }
+
+  .page-body { padding: 12px; }
+  .topbar { padding: 0 12px; height: 56px; }
+  .topbar-title { font-size: 15px; }
   
-  .topbar { padding: 0 16px; }
+  .sb-header { margin: 8px; padding: 12px 8px; }
   
-  .sb-header { margin: 8px; }
+  /* Mobile Table Fix */
+  .tbl-wrap {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    border-radius: 8px;
+    background: #fff;
+    border: 1px solid var(--border);
+  }
+  
+  table { min-width: 700px; }
+  th, td { padding: 12px 10px; font-size: 12px; }
 }
 
 @media (max-width: 640px) {
-  .topbar-title { font-size: 14px; }
-  .topbar-actions { gap: 8px; }
+  .topbar-datetime { display: none; }
+  .topbar-actions { gap: 6px; }
+  
+  .stats-grid {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+  
+  .stat-card { padding: 14px; }
+  .stat-val { font-size: 22px; }
+  
+  .filter-bar {
+    flex-direction: column;
+    gap: 8px;
+    padding: 10px;
+  }
+  
+  .filter-bar .form-control {
+    width: 100% !important;
+    font-size: 12px;
+  }
+
+  /* Stacked form rows on mobile */
+  .form-row {
+    flex-direction: column;
+    gap: 0;
+  }
+  
+  .card-header { padding: 12px; }
+  .card-title { font-size: 13px; }
+  
+  /* Ticket modal adjustments */
+  .modal {
+    width: 95%;
+    margin: 10px;
+    max-height: 90vh;
+  }
 }
